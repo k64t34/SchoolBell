@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="schtt.js"></script>
+<title>Расписание уроков</title>
+<style type="text/css">
+.tbl_Calendar {
+	border-collapse: collapse;
+	border-style: solid;
+	border-width: 1px;
+}
+.Calendar_Clock {
+	font-family: "monospace"; font-size: x-large; font-weight: bold;
+}
+.style_body {
+	font-family: Arial;
+	}
+.style4 {
+	font-weight: bold;
+	background-color: #CCFFFF;
+	}
+.calendar_foor_error {
+	font-weight: bold;
+	background-color: #FF0000;
+	}
+.tbl_timetable {
+	border: 1px solid black;
+}	
+</style>
+</head>
+
+<body class="style_body">
+<table id="tbl_Calendar" style="align=&quot;center&quot;; width: 300px;" class="tbl_Calendar" align="center" >
+	<tr bgcolor="silver">
+	<td colspan="4">
+	<img src="bell.png">
+	</td></tr>	
+	<tr align="center">
+		<td id="Calendar_Date" colspan="4">&nbsp;</td>		
+	</tr>
+	<tr align="center">		
+		<td id="Calendar_Clock" class="Calendar_Clock" colspan="4">&nbsp;</td>		
+	</tr>
+	<tr align="center">		
+		<td width="25%"id="Calendar_PreviosStatus" >&nbsp;</td>		
+		<td width="50%"id="Calendar_Status" colspan="2">&nbsp;</td>	
+		<td width="25%"id="Calendar_NextStatus" >&nbsp;</td>				
+	</tr>
+	<tr align="center">		
+		<td width="50%" id="Calendar_TimeFrom" colspan="2">>&nbsp;</td>		
+		<td id="Calendar_TimeTo" colspan="2">>&nbsp;</td>		
+	</tr>
+	<tr align="center">		
+		<td id="Calendar_TimeSpend" colspan="2">>&nbsp;</td>		
+		<td id="Calendar_TimeRest" colspan="2">>&nbsp;</td>		
+	</tr>
+	<tr align="center">
+		<td id="calendar_footer" width="500" class="style4" colspan="4">▼</td>		
+	</tr>
+	<!--<tr id="Lesson_spend">		
+	</tr>-->
+</table>
+
+
+
+<table id="tbl_timetable" class="tbl_timetable" style= "align=&quot;center&quot;; width: 300px;" align="center">
+	<tr bgcolor="silver"><td  align="center"colspan="4">Расписание звонков</td></tr>
+</table>
+<audio id="soundbell"><source src="bell.mp3" type="audio/mpeg"></audio>
+
+</body>
+</html>
