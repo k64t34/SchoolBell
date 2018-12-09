@@ -13,10 +13,10 @@
 .Calendar_Clock {
 	font-family: "monospace"; font-size: x-large; font-weight: bold;
 }
-.style_body {
+.body {
 	font-family: Arial;
 	}
-.style4 {
+.calendar_footer {
 	font-weight: bold;
 	background-color: #CCFFFF;
 	}
@@ -26,15 +26,18 @@
 	}
 .tbl_timetable {
 	border: 1px solid black;
+.td_center {
+	text-align:center;
+	}
 }	
 </style>
 </head>
 
-<body class="style_body">
+<body class="body">
 <table id="tbl_Calendar" style="align=&quot;center&quot;; width: 300px;" class="tbl_Calendar" align="center" >
 	<tr bgcolor="silver">
 	<td colspan="4">
-	<img src="bell.png">
+	<!---<img src="bell.png">--->&nbsp;
 	</td></tr>	
 	<tr align="center">
 		<td id="Calendar_Date" colspan="4">&nbsp;</td>		
@@ -43,21 +46,21 @@
 		<td id="Calendar_Clock" class="Calendar_Clock" colspan="4">&nbsp;</td>		
 	</tr>
 	<tr align="center">		
-		<td width="25%"id="Calendar_PreviosStatus" >&nbsp;</td>		
+		<td width="25%"id="Calendar_PreviosStatus" class="td_center">&nbsp;</td>		
 		<td width="50%"id="Calendar_Status" colspan="2">&nbsp;</td>	
 		<td width="25%"id="Calendar_NextStatus" >&nbsp;</td>				
 	</tr>
 	<tr align="center">		
-		<td width="50%" id="Calendar_TimeFrom" colspan="2">>&nbsp;</td>		
-		<td id="Calendar_TimeTo" colspan="2">>&nbsp;</td>		
+		<td width="50%" id="Calendar_TimeFrom" colspan="2" class="td_center">>&nbsp;</td>		
+		<td width="50%" id="Calendar_TimeTo" colspan="2" class="td_center">>&nbsp;</td>		
 	</tr>
 	<tr align="center">		
-		<td id="Calendar_TimeSpend" colspan="2">>&nbsp;</td>		
-		<td id="Calendar_TimeRest" colspan="2">>&nbsp;</td>		
+		<td width="50%" id="Calendar_TimeSpend" colspan="2">>&nbsp;</td>		
+		<td width="50%" id="Calendar_TimeRest" colspan="2">>&nbsp;</td>		
 	</tr>
-	<tr align="center">
-		<td id="calendar_footer" width="500" class="style4" colspan="4">▼</td>		
-	</tr>
+	<!--<tr align="center">
+		<td id="calendar_footer" width="500" class="calendar_footer" colspan="4">▼</td>		
+	</tr>-->
 	<!--<tr id="Lesson_spend">		
 	</tr>-->
 </table>

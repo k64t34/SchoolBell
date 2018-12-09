@@ -7,6 +7,7 @@ var bells =[];//Object Definition https://www.w3schools.com/js/js_objects.asp
 var idLesson=-1;
 var idLessonNext=-1;
 var idLessonPrevios=-1;
+var LessonDuration=0;
 var Calendar_Status=-1; //-1 - undefined, 0-timeoff, 1-Lesson, 2-break
 var DateTime_NextStatus = new Date(lastDateTime.getFullYear(), lastDateTime.getMonth(), lastDateTime.getDate(), 23, 59);
 var DateTime_PreviosStatus = new Date(lastDateTime.getFullYear(), lastDateTime.getMonth(), lastDateTime.getDate(), 0, 0);
@@ -25,7 +26,7 @@ function render() {
 curDateTime = new Date();
 ClockColon=!ClockColon;
 document.getElementById('Calendar_Clock').innerHTML = curDateTime.getHours()+
-	(ClockColon?":":";")+
+	(ClockColon?"<font color=\"black\">:</font>":"<font color=\"white\">:</font>")+
 	(curDateTime.getMinutes()<10?"0":"")+curDateTime.getMinutes();
 if (debug) document.getElementById('Calendar_Clock').innerHTML+=":"+(curDateTime.getSeconds()<10?"0":"")+curDateTime.getSeconds();
 if (curDateTime>=DateTime_NextStatus)
@@ -164,6 +165,8 @@ document.getElementById("Calendar_NextStatus").innerHTML = "";
 
 DateTime_PreviosStatus=bells[id].STARTTIME;
 DateTime_NextStatus=bells[id].ENDTIME;
+LessonDuration=DateTime_NextStatus-DateTime_PreviosStatus;
+if (debug) console.log("LessonDuration",LessonDuration);
 document.getElementById("r_Timetable_"+id).bgColor=color_status;
 var row = document.getElementById("r_Timetable_"+(id-1));
 for (i=0;i!=row.cells.length;i++)
