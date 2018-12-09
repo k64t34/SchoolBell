@@ -19,6 +19,8 @@ const strTimeoff="Нерабочее время";
 var sound =false;
 const color_status="#FFAAAA";
 const color_NOstatus="#FFFFFF";
+var TimeSpend =0;
+var TimeRest  =0;
 
 //*****************************
 function render() {
@@ -37,9 +39,11 @@ if (curDateTime>=DateTime_NextStatus)
 	}
 document.getElementById('Calendar_TimeFrom').innerHTML=GetTimeHM(DateTime_PreviosStatus);
 document.getElementById('Calendar_TimeTo').innerHTML=GetTimeHM(DateTime_NextStatus);
+TimeSpend=Math.floor((curDateTime-DateTime_PreviosStatus)/60000);
+TimeRest=Math.ceil((DateTime_NextStatus-curDateTime)/60000);
+document.getElementById('Calendar_TimeSpend').innerHTML=TimeSpend;
+document.getElementById('Calendar_TimeRest').innerHTML=TimeRest;
 
-document.getElementById('Calendar_TimeSpend').innerHTML=Math.floor((curDateTime-DateTime_PreviosStatus)/60000);
-document.getElementById('Calendar_TimeRest').innerHTML=Math.ceil((DateTime_NextStatus-curDateTime)/60000);
 
 if (lastDateTime.getDate()!=curDateTime.getDate())
 	{ 
@@ -165,7 +169,7 @@ document.getElementById("Calendar_NextStatus").innerHTML = "";
 
 DateTime_PreviosStatus=bells[id].STARTTIME;
 DateTime_NextStatus=bells[id].ENDTIME;
-LessonDuration=DateTime_NextStatus-DateTime_PreviosStatus;
+LessonDuration=(DateTime_NextStatus-DateTime_PreviosStatus)/60000;
 if (debug) console.log("LessonDuration",LessonDuration);
 document.getElementById("r_Timetable_"+id).bgColor=color_status;
 var row = document.getElementById("r_Timetable_"+(id-1));
