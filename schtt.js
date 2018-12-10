@@ -1,4 +1,5 @@
 //-> Учитывать день недели
+var version="1.0 10122018";
 var debug=true;
 var lastDateTime= new Date();
 var curDateTime= new Date(lastDateTime.getTime());
@@ -43,6 +44,8 @@ TimeSpend=Math.floor((curDateTime-DateTime_PreviosStatus)/60000);
 TimeRest=Math.ceil((DateTime_NextStatus-curDateTime)/60000);
 document.getElementById('Calendar_TimeSpend').innerHTML=TimeSpend;
 document.getElementById('Calendar_TimeRest').innerHTML=TimeRest;
+document.getElementById("Lesson_progess").value=TimeSpend;
+document.getElementById("Lesson_progess").max=LessonDuration;
 
 
 if (lastDateTime.getDate()!=curDateTime.getDate())
@@ -109,8 +112,8 @@ if (debug)
 			STARTTIME=new Date();	
 			}			
 		else	
-			STARTTIME=new Date(bells[i-1].ENDTIME.getTime()+60000+Math.floor(Math.random()*120*1000));		
-		ENDTIME=new Date(STARTTIME.getTime()+60000+Math.floor(Math.random()*60*1000));
+			STARTTIME=new Date(bells[i-1].ENDTIME.getTime()+60000+Math.floor(Math.random()*280*1000));		
+		ENDTIME=new Date(STARTTIME.getTime()+60000+Math.floor(Math.random()*380*1000));
 		if (STARTTIME.getDate()!=lastDateTime.getDate() || ENDTIME.getDate()!=lastDateTime.getDate() /*|| ENDTIME.getHours()>22*/)break;
 			STARTTIME.setSeconds(0);
 			STARTTIME.setMilliseconds(0);

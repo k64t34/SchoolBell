@@ -27,6 +27,7 @@
 }
 .body {
 	font-family: Arial;
+	background-color: #FFFFFF;
 	}
 .calendar_footer {
 	font-weight: bold;
@@ -74,17 +75,17 @@
 		<td width="50%" id="Calendar_TimeFrom" colspan="2" class="td_center">>&nbsp;</td>		
 		<td width="50%" id="Calendar_TimeTo" colspan="2" class="td_center">>&nbsp;</td>		
 	</tr>
-	<tr align="center">		
+	<!--<tr align="center">		
 		<td width="25%" bgcolor="#AAAAAA"  id="Calendar_TimeSpend" colspan="2">>&nbsp;</td>		
-		<td width="75%" id="Calendar_TimeRest" colspan="2">>&nbsp;</td>		
-	</tr>
+		<td width="75%" id="Calendar_TimeRest" colspan="2">&nbsp;</td>		
+	</tr>-->
 	<!--<tr align="center">
 		<td id="calendar_footer" width="500" class="calendar_footer" colspan="4">▼</td>		
 	</tr>-->
 	<!--<tr id="Lesson_spend">		
 	</tr>-->
-	<tr><td  colspan=4 align="center">12
-	<progress value="39" max="40" style="width:80%" >23</progress>32	
+	<tr><td  colspan=4 align="center"><span id="Calendar_TimeSpend">&nbsp;</span>
+	<progress id="Lesson_progess" value="0" max="40" style="width:80%" ></progress><span id="Calendar_TimeRest">&nbsp;</span>
 	</td></tr>
 </table>
 
