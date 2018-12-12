@@ -1,0 +1,35 @@
+body {
+	font-family: Arial;
+	background-color: #FFFFFF;
+	}
+.tbl_Calendar {
+	border-collapse: collapse;
+	border-style: solid;
+	border-width: 1px;	
+	}
+.Calendar_Clock {
+font-family: "monospace"; font-size: x-large; font-weight: bold;
+}
+
+.calendar_footer {
+	font-weight: bold;
+	background-color: #CCFFFF;
+	}
+.calendar_foor_error {
+	font-weight: bold;
+	background-color: #FF0000;
+	}
+.tbl_timetable {
+	border: 1px solid black;
+.td_center {
+	text-align:center;
+	}
+.progress {
+  background-color: #f3f3f3;  
+  height: 18px;
+  border-radius: 9px;
+  width: 150em;
+  border: 0px solid #0063a6;
+  background: #fff;
+	}	
+}	

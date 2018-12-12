@@ -1,0 +1,22 @@
+Audio
+ https://www.w3schools.com/jsref/met_audio_play.asp
+
+Показать/Скрыть блок  
+	https://javascript.ru/forum/dom-window/5204-pokazat-skryt-blok.html
+	https://stackoverflow.com/questions/17560867/hide-html-elements-by-using-javascript
+	
+
+JavaScript HTML DOM Document	
+	https://www.w3schools.com/js/js_htmldom_document.asp
+	
+XML DOM Tutorial
+	https://www.w3schools.com/xml/dom_intro.asp
+	
+HTML Styles - CSS	
+	https://www.quora.com/How-do-I-embed-CSS-in-HTML
+	https://www.w3schools.com/html/html_css.asp
+Мобильный значок сайта
+	Устройства фирмы Apple начиная с iOS 1.1.3 и некоторые устройства на базе ОС Android[10] поддерживают специальные большие иконки, которые могут использоваться в качестве значков веб-приложений.[11][12] Сайт может предоставлять такую иконку, указав в заголовке <head> <link rel="apple-touch-icon" ...>[13] Рекомендуемый размер иконки 60×60 пикселей для iPhone и 120×120 пикселей для iPhone с Retina дисплеем.[12][14][15] Для iPad рекомендуется иконка размером 76×76 пикселей, а для iPad с Retina дисплеем (начиная с iPad третьего поколения) 152×152 пикселя.[16] Для планшетов на Android с браузером Chrome предпочтительной является иконка формата PNG и размера 192x192.[17]
+
+<Progress>
+	https://www.w3schools.com/tags/tag_progress.asp

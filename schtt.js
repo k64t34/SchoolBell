@@ -1,6 +1,7 @@
 //-> Учитывать день недели
-var version="1.0 10122018";
-var debug=true;
+//var debug=true;
+if (typeof debug === 'undefined')  var debug=false;
+var version="1.01 12122018";
 var lastDateTime= new Date();
 var curDateTime= new Date(lastDateTime.getTime());
 //var bells = new Array();
@@ -87,7 +88,8 @@ if (xmlDoc.firstChild.tagName!="Timetable"){PrintErrorTo_calendar_foot("Неве
 if (xmlDoc.firstChild.getElementsByTagName("bell").length==0){PrintErrorTo_calendar_foot("В БД нет раздела звонков");return;}		
 var bell = xmlDoc.firstChild.getElementsByTagName("bell")[0];
 if (bell.getElementsByTagName("Lesson").length==0){PrintErrorTo_calendar_foot("В БД нет информации о звонках");return;}		
-//if (debug)console.log(bell);
+if (debug)console.log(bell);
+if (debug)console.log(bell.getElementsByTagName("Lesson").length);
 for (i=0;i!=bell.getElementsByTagName("Lesson").length;i++)
 	{		
 	var Lesson = bell.getElementsByTagName("Lesson")[i];
@@ -111,8 +113,10 @@ if (debug)
 			first=false;	
 			STARTTIME=new Date();	
 			}			
-		else	
+		else
+			{
 			STARTTIME=new Date(bells[i-1].ENDTIME.getTime()+60000+Math.floor(Math.random()*280*1000));		
+			}		
 		ENDTIME=new Date(STARTTIME.getTime()+60000+Math.floor(Math.random()*380*1000));
 		if (STARTTIME.getDate()!=lastDateTime.getDate() || ENDTIME.getDate()!=lastDateTime.getDate() /*|| ENDTIME.getHours()>22*/)break;
 			STARTTIME.setSeconds(0);
@@ -244,7 +248,7 @@ else if (curDateTime>bells[bells.length-1].ENDTIME)
 function render_timetable(){
 //*****************************
 var tbl = document.getElementById("tbl_timetable");
-for (i=0;i!=bells.length-1;i++)
+for (i=0;i!=bells.length;i++)
 	{
 	var row = tbl.insertRow(-1);
 	row.id="r_Timetable_"+i;
