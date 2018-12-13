@@ -15,7 +15,10 @@
 	<button><img src="help.png" width=32 style="cursor: pointer;"></button>
 	<button onClick="javascript:close_clip()"><img src="help.png" width=32 style="cursor: pointer;"></button>-->
 	<!--http://jsfiddle.net/ThinkingStiff/V5Xqr/-->
-	<button onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSfVCzklDXKZ4wKdp7vUwD0dAUv1lXfw0qbMqHhWB5IEWJDydg/viewform'" style="cursor: pointer;display: inline-block;background: url(help2.png);background-size: 32px 32px;height: 32px; width: 32px;"></button>
+	<button onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSfVCzklDXKZ4wKdp7vUwD0dAUv1lXfw0qbMqHhWB5IEWJDydg/viewform'" 
+		style="border-radius: 4px;cursor: pointer;display: inline-block;background: url(help2.png);background-size: 32px 32px;background-position: center; height: 32px; width: 32px;"></button>
+	<button id="btn_sound"  onclick="btn_sound_onclick()"
+		style="border-radius: 4px;cursor: pointer;display: inline-block;background: url(bell-on.png);background-size: 32px 32px;background-position: center; height: 32px; width: 32px;"></button>
 	</td></tr>	
 	<tr align="center">
 		<td id="Calendar_Date" colspan="4">&nbsp;</td>
@@ -42,7 +45,7 @@
 	<!--<tr id="Lesson_spend">		
 	</tr>-->
 	<tr><td  colspan=4 align="center"><span id="Calendar_TimeSpend">&nbsp;</span>
-	<progress id="Lesson_progess" value="0" max="40" style="width:80%" ></progress><span id="Calendar_TimeRest">&nbsp;</span>
+	<progress id="Lesson_progess" value="0" max="40" style="width:70%" ></progress><span id="Calendar_TimeRest">&nbsp;</span>
 	</td></tr>
 </table>
 

@@ -1,10 +1,15 @@
+// -> Cookie.Ring=true
+// -> Все стили в css
+// -> Разная подсветка строк в таблице расписания чет\нетеч
+// -> Цвет времени меняется в зависимости от остатка 
+// -> Первый таймер точно до 59 секунд, второй через минуту. На ежесекундное моргание : .
+//-> линия времени в таблице для нерабчего времени. Если время до  полуночи, то ниже всейтаблицы, если после полунчи, то над всей таблицей
 //-> Учитывать день недели
-//var debug=true;
+var debug=true;
 if (typeof debug === 'undefined')  var debug=false;
-var version="1.01 12122018";
+var version="1.02 13122018";
 var lastDateTime= new Date();
 var curDateTime= new Date(lastDateTime.getTime());
-//var bells = new Array();
 var bells =[];//Object Definition https://www.w3schools.com/js/js_objects.asp
 var idLesson=-1;
 var idLessonNext=-1;
@@ -23,6 +28,7 @@ const color_status="#FFAAAA";
 const color_NOstatus="#FFFFFF";
 var TimeSpend =0;
 var TimeRest  =0;
+var Cookie = {ring:true, theme:"light"};
 
 //*****************************
 function render() {
@@ -39,15 +45,21 @@ if (curDateTime>=DateTime_NextStatus)
 	if (sound)
 	{var a=document.getElementById("soundbell");a.play();}
 	}
-document.getElementById('Calendar_TimeFrom').innerHTML=GetTimeHM(DateTime_PreviosStatus);
-document.getElementById('Calendar_TimeTo').innerHTML=GetTimeHM(DateTime_NextStatus);
+
 TimeSpend=Math.floor((curDateTime-DateTime_PreviosStatus)/60000);
 TimeRest=Math.ceil((DateTime_NextStatus-curDateTime)/60000);
-document.getElementById('Calendar_TimeSpend').innerHTML=TimeSpend;
-document.getElementById('Calendar_TimeRest').innerHTML=TimeRest;
-document.getElementById("Lesson_progess").value=TimeSpend;
-document.getElementById("Lesson_progess").max=LessonDuration;
+if (Calendar_Status==0)
+	{	
+	document.getElementById('Calendar_TimeSpend').innerHTML=GetHimanTimeHM(TimeSpend);
+	document.getElementById('Calendar_TimeRest').innerHTML=GetHimanTimeHM(TimeRest);
+	}
+else
+	{
+	document.getElementById('Calendar_TimeSpend').innerHTML=TimeSpend+" ";
+	document.getElementById('Calendar_TimeRest').innerHTML=" "+TimeRest;
+	}
 
+document.getElementById("Lesson_progess").value=TimeSpend;
 
 if (lastDateTime.getDate()!=curDateTime.getDate())
 	{ 
@@ -57,7 +69,20 @@ if (lastDateTime.getDate()!=curDateTime.getDate())
 	}	
 }
 //***************************** 
-function render_date() {
+function render_progress_set_status() { 
+//*****************************	
+LessonDuration=(DateTime_NextStatus-DateTime_PreviosStatus)/60000;
+if (debug) console.log("LessonDuration",LessonDuration);
+document.getElementById('Calendar_TimeFrom').innerHTML=GetTimeHM(DateTime_PreviosStatus);
+document.getElementById('Calendar_TimeTo').innerHTML=GetTimeHM(DateTime_NextStatus);
+document.getElementById("Lesson_progess").max=LessonDuration;
+if (Calendar_Status==0)
+	document.getElementById("Lesson_progess").style.width = "60%";
+else	
+	document.getElementById("Lesson_progess").style.width = "80%";
+}
+//***************************** 
+function render_date() { // Called on 1st load and after midnight
 //*****************************	
 document.getElementById('Calendar_Date').innerHTML =new Intl.DateTimeFormat('default',
 	{
@@ -71,6 +96,7 @@ document.getElementById('Calendar_Date').innerHTML =new Intl.DateTimeFormat('def
 window.onload = function() {
 //*****************************
 if (debug)console.log("DEBUG ON");
+checkCookie();
 timer = setInterval(render, 1000);
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function(){if (this.readyState == 4 && this.status == 200)ReadXML(this);};
@@ -161,6 +187,26 @@ function GetTimeHM(date){
 return date.getHours()+":"+(date.getMinutes()<10?"0":"")+date.getMinutes();	
 }	
 //*****************************	
+function GetHimanTimeHM(minute){
+//*****************************		
+var result="";
+if (minute>60)
+	{
+	h=parseInt(minute/60);
+	minute=minute-h*60;
+	minute=(minute<10?"0":"")+minute+"м";
+	if (h>24) 
+		{
+		d=parseInt(result/24);
+		h=h-d*24;
+		result=d+"д ";
+		}
+	result=result+h+"ч ";
+	}
+result=result+minute;
+return result;
+}
+//*****************************	
 function SetLesson(id){
 //*****************************	
 if (debug) console.log("SetLesson",id);
@@ -176,8 +222,7 @@ document.getElementById("Calendar_NextStatus").innerHTML = "";
 
 DateTime_PreviosStatus=bells[id].STARTTIME;
 DateTime_NextStatus=bells[id].ENDTIME;
-LessonDuration=(DateTime_NextStatus-DateTime_PreviosStatus)/60000;
-if (debug) console.log("LessonDuration",LessonDuration);
+
 document.getElementById("r_Timetable_"+id).bgColor=color_status;
 var row = document.getElementById("r_Timetable_"+(id-1));
 for (i=0;i!=row.cells.length;i++)
@@ -190,7 +235,8 @@ for (i=0;i!=row.cells.length;i++)
 	{
 	row.cells[i].style.borderTopStyle="none";	
 	row.cells[i].style.borderTopColor=color_NOstatus;	
-	}	
+	}
+render_progress_set_status();	
 }	
 //*****************************	
 function SetBreak(id){
@@ -222,7 +268,7 @@ for (i=0;i!=row.cells.length;i++)
 	//document.getElementById("r_Timetable_"+i).style= "border: thick solid #FF0000;"
 	//cell1.style.borderBottomStyle="solid";
 	
-	
+render_progress_set_status();	
 }
 //*****************************	
 function SetTimeoff(){
@@ -243,6 +289,7 @@ else if (curDateTime>bells[bells.length-1].ENDTIME)
 	DateTime_NextStatus=new Date(bells[0].STARTTIME.getTime()+3600*24*1000);
 	DateTime_PreviosStatus=new Date(bells[bells.length-1].ENDTIME);
 	}
+render_progress_set_status();	
 }
 //*****************************	
 function render_timetable(){
@@ -267,6 +314,51 @@ for (i=0;i!=bells.length;i++)
 	//cell1.style.borderBottomStyle="solid";
 	}
 }
+//*****************************
+function setCookie(cname, cvalue, exdays) {
+//*****************************	
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+//*****************************
+function getCookie(cname) {
+//*****************************	
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+//*****************************
+function checkCookie() {
+//*****************************	
 
-
+var ring = getCookie("ring");  
+if (debug) console.log("ring="+ring); 
+ 
+if (ring == "") 
+	setCookie("ring", Cookie.ring, 365);
+else
+	Cookie.ring=ring;
+btn_sound_set_image();
+}
+function btn_sound_onclick(){
+if (debug) console.log("btn_sound.onclick"); 
+Cookie.ring=!Cookie.ring;
+setCookie("ring", Cookie.ring, 365);
+btn_sound_set_image();
+}	
+function btn_sound_set_image(){
+if (debug) console.log("url('bell-"+(Cookie.ring?"on":"off")+".png"+"');background-position: center;"); 
+document.getElementById('btn_sound').style.background="url('bell-"+(Cookie.ring?"on":"off")+".png"+"');background-position: center;";
+}	
 		
