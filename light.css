@@ -21,9 +21,16 @@ font-family: "monospace"; font-size: x-large; font-weight: bold;
 	}
 .tbl_timetable {
 	border: 1px solid black;
+	}
 .td_center {
 	text-align:center;
 	}
+.bell_on {		
+	background: url(bell-on.png) center;
+	}
+.bell_off {
+	background: url(bell-off.png) center;
+	}	
 .progress {
   background-color: #f3f3f3;  
   height: 18px;

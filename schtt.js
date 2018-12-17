@@ -7,7 +7,7 @@
 //-> Учитывать день недели
 var debug=true;
 if (typeof debug === 'undefined')  var debug=false;
-var version="1.02 13122018";
+var version="1.03 17122018";
 var lastDateTime= new Date();
 var curDateTime= new Date(lastDateTime.getTime());
 var bells =[];//Object Definition https://www.w3schools.com/js/js_objects.asp
@@ -23,7 +23,6 @@ var ClockColon=true;
 const strLesson="Урок";
 const strBreak="Перемена";
 const strTimeoff="Нерабочее время";
-var sound =false;
 const color_status="#FFAAAA";
 const color_NOstatus="#FFFFFF";
 var TimeSpend =0;
@@ -42,7 +41,7 @@ if (debug) document.getElementById('Calendar_Clock').innerHTML+=":"+(curDateTime
 if (curDateTime>=DateTime_NextStatus)
 	{
 	Check_Calendar_Status();
-	if (sound)
+	if (Cookie.ring)
 	{var a=document.getElementById("soundbell");a.play();}
 	}
 
@@ -340,15 +339,14 @@ function getCookie(cname) {
 }
 //*****************************
 function checkCookie() {
-//*****************************	
-
+//*****************************
 var ring = getCookie("ring");  
-if (debug) console.log("ring="+ring); 
- 
+if (debug) console.log("checkCookie() ring="+ring); 
 if (ring == "") 
 	setCookie("ring", Cookie.ring, 365);
 else
-	Cookie.ring=ring;
+	Cookie.ring=(/true/i).test(ring) ;
+if (debug) console.log("checkCookie() Cookie.ring="+Cookie.ring);
 btn_sound_set_image();
 }
 function btn_sound_onclick(){
@@ -358,7 +356,11 @@ setCookie("ring", Cookie.ring, 365);
 btn_sound_set_image();
 }	
 function btn_sound_set_image(){
-if (debug) console.log("url('bell-"+(Cookie.ring?"on":"off")+".png"+"');background-position: center;"); 
-document.getElementById('btn_sound').style.background="url('bell-"+(Cookie.ring?"on":"off")+".png"+"');background-position: center;";
+if (debug) console.log("btn_sound_set_image() Cookie.ring="+Cookie.ring);	
+var new_style="bell_"
+if (Cookie.ring)new_style+="on";else new_style+="off";
+if (debug) console.log("btn_sound_set_image() "+new_style); 
+document.getElementById('btn_sound').className=new_style;
+
 }	
 		
