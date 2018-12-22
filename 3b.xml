@@ -1,5 +1,43 @@
 <?xml version="1.1" encoding="UTF-8" ?>
-<Timetable>
-	<Lessons>
-	</Lessons>
-</Timetable>
+<Class name="3Б">
+	<Day id="1">
+		<Lesson id="1">1</Lesson>
+		<Lesson id="2">2</Lesson>
+		<Lesson id="3">3</Lesson>
+		<Lesson id="4">4</Lesson>
+		<Lesson id="5">5</Lesson>
+		<Lesson id="6">6</Lesson>
+	</Day>
+	<Day id="2">
+		<Lesson id="10">1</Lesson>
+		<Lesson id="5">2</Lesson>
+		<Lesson id="6">3</Lesson>
+		<Lesson id="7">4</Lesson>
+		<Lesson id="8">5</Lesson>
+		<Lesson id="9">2</Lesson>	
+	</Day>
+	<Day id="3">
+		<Lesson id="1">1</Lesson>
+		<Lesson id="2">2</Lesson>
+		<Lesson id="3">3</Lesson>
+		<Lesson id="4">4</Lesson>
+		<Lesson id="5">5</Lesson>
+		<Lesson id="6">6</Lesson>
+	</Day>	
+	<Day id="4">
+		<Lesson id="1">1</Lesson>
+		<Lesson id="2">2</Lesson>
+		<Lesson id="3">3</Lesson>
+		<Lesson id="4">4</Lesson>
+		<Lesson id="5">5</Lesson>
+		<Lesson id="6">6</Lesson>
+	</Day>	
+	<Day id="5">
+		<Lesson id="1">1</Lesson>
+		<Lesson id="2">2</Lesson>
+		<Lesson id="3">3</Lesson>
+		<Lesson id="4">4</Lesson>
+		<Lesson id="5">5</Lesson>
+		<Lesson id="6">6</Lesson>
+	</Day>	
+</Class>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 <Timetable>
 	<bell>	
 		<Lesson lesson="1" STARTTIME="8:30" ENDTIME="9:10"></Lesson>
@@ -12,14 +12,14 @@
 		<Lesson lesson="09" STARTTIME="15:25" ENDTIME="16:05"></Lesson>		
 		<Lesson lesson="10" STARTTIME="16:20" ENDTIME="17:00"></Lesson>				
 	</bell>
-	<Subjects>
-		<subject ID=" 01">Математика</subject>
-		<subject ID="02 ">Русский язык</subject>
-		<subject ID="03">English</subject>
-		<subject ID="4">Чтение</subject>
-		<subject ID="05">Физкультура</subject>
-		<subject ID="06 ">Окружающий мир</subject>
-		<subject ID=" 7 ">Информатика</subject>
-		<subject ID=" 17 ">Музыка</subject>
-	</Subjects>
+	<subjects>
+		<subject ID="4">Math  4</subject>
+		<subject ID="01">Math 01  </subject>
+		<subject ID="10">Math  10</subject>
+		<subject ID=" 5 ">Math  5</subject>
+		<subject ID=" 2">Math  2</subject>
+		<subject ID="3 ">Math  3</subject>
+		
+		
+	</subjects>
 </Timetable>

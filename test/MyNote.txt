@@ -1,0 +1,11 @@
+https://stackoverflow.com/questions/25739286/how-to-create-html-from-xml-using-xslt-and-javascript 
+http://citforum.ru/internet/xmlxslt/xmlxslt.shtml#JavaScript сортировка чере стиль xsl в javascript - ActiveX
+https://www.tutorialspoint.com/xslt/xslt_foreach.htm
+<!--<xsl:copy-of select="document('file2.xml')//financialexpectation[tradeId=current()/tradeId]"/> -->
+
+
+https://stackoverrun.com/ru/q/4512156
+http://qaru.site/questions/12119039/xslt-read-from-two-different-sources-xml-file-and-excel-sheet
+http://qaru.site/questions/12119039/xslt-read-from-two-different-sources-xml-file-and-excel-sheet
+http://www.sql.ru/forum/958587/vstavit-javascript-v-xsl
+http://citforum.ru/internet/xmlxslt/xmlxslt.shtml

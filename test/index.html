@@ -1,0 +1,79 @@
+<html>
+<body>
+<h1>TEST</h1><hr>
+<span id="demo">demo</span><br>
+
+</body></html>
+
+<script>
+
+var xmlDoc;
+var xslDoc;
+//*****************************
+function ReadXML(xhttp) {
+//*****************************	
+parser = new DOMParser();
+xmlDoc = parser.parseFromString(xhttp.response,"text/xml");	
+//var xmlDoc = xhttp.responseXML;	
+var xhttp2 = new XMLHttpRequest();
+xhttp2.onreadystatechange = function(){if (this.readyState == 4 && this.status == 200)Parser1(this);};
+xhttp2.open("GET", "students.xsl", true);
+xhttp2.send();
+}
+//*****************************
+function Parser1(xhttp2) {
+//*****************************	
+parser = new DOMParser();
+xslDoc = parser.parseFromString(xhttp2.response,"text/xml");	
+xsltProcessor = new XSLTProcessor();
+xsltProcessor.importStylesheet(xslDoc);
+var fragment = xsltProcessor.transformToFragment(xmlDoc,document);
+document.getElementById("demo").innerHTML = fragment;
+//xmlDoc.Style.load("students.xsl");
+path = "/Timetable/Day[@id=2]/Lesson";
+var txt = "";
+if (xmlDoc.evaluate) {
+	var nodes = xmlDoc.evaluate(path, xmlDoc, null, XPathResult.ANY_TYPE, null);
+	var result = nodes.iterateNext();
+	iRow = 0;
+	while (result) {
+		txt += iRow + ". "+result.childNodes[0].nodeValue + "<br>";
+		//subjects.push({id:parseInt(result.attributes["0"].nodeValue),name:result.childNodes[0].nodeValue});				
+		iRow++;
+		result = nodes.iterateNext();
+		} 
+	document.getElementById("demo").innerHTML = txt;
+	}	
+	
+}
+//*****************************
+window.onload = function() {
+//*****************************
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function(){if (this.readyState == 4 && this.status == 200)ReadXML(this);};
+xhttp.open("GET", "students.xml", true);
+xhttp.send();
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

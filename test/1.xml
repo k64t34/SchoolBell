@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="1.xsl"?>
+<Timetable>
+	<Day id ="1">
+		<Lesson id=" 5 "subject="2"/>
+		<Lesson id=" 1 "subject="3"/>
+	</Day>
+	<Day id ="3">
+		<Lesson id=" 5 "subject="2"/>
+		<Lesson id=" 1 "subject="3"/>
+	</Day>
+	<Day id ="2">
+		<Lesson id=" 5 "subject="2"/>
+		<Lesson id=" 1 "subject="3"/>
+	</Day>
+</Timetable>

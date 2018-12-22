@@ -1,18 +1,24 @@
-// -> Cookie.Ring=true
-// -> Все стили в css
-// -> Разная подсветка строк в таблице расписания чет\нетеч
+// [ ] Рачитать LEssonCount, пока констнта
+// [ ] Remake function findSubject(id) 
+// [ ] Сортировк в xml
+// [x] Cookie.Ring=true
+// [ ] Все стили в css
+// [ ] Разная подсветка строк в таблице расписания чет\нетеч
 // -> Цвет времени меняется в зависимости от остатка 
 // -> Первый таймер точно до 59 секунд, второй через минуту. На ежесекундное моргание : .
 //-> линия времени в таблице для нерабчего времени. Если время до  полуночи, то ниже всейтаблицы, если после полунчи, то над всей таблицей
 //-> Учитывать день недели
 var debug=true;
 if (typeof debug === 'undefined')  var debug=false;
-var version="1.03 17122018";
+var version="1.04 19122018";
+var xhttp_sbj = new XMLHttpRequest();
 var lastDateTime= new Date();
 var curDateTime= new Date(lastDateTime.getTime());
 var bells =[];//Object Definition https://www.w3schools.com/js/js_objects.asp
+var subjects =[];
 var idLesson=-1;
 var idLessonNext=-1;
+var LessonCount=10;
 var idLessonPrevios=-1;
 var LessonDuration=0;
 var Calendar_Status=-1; //-1 - undefined, 0-timeoff, 1-Lesson, 2-break
@@ -157,7 +163,62 @@ if (debug)
 	}
 	render_timetable();
 	Check_Calendar_Status();	
+//Read subjects title	
+path = "/Timetable/Subjects/subject";
+var txt = "";
+if (xmlDoc.evaluate) {
+	var nodes = xmlDoc.evaluate(path, xmlDoc, null, XPathResult.ANY_TYPE, null);
+	var result = nodes.iterateNext();
+	iRow = 0;
+	while (result) {
+		txt += result.childNodes[0].nodeValue + "<br>";
+		subjects.push({id:parseInt(result.attributes["0"].nodeValue),name:result.childNodes[0].nodeValue});				
+		iRow++;
+		result = nodes.iterateNext();
+		} 
+	//document.getElementById("demo").innerHTML = findSubject(222);
+	}	
 
+
+xhttp_sbj.onreadystatechange = function(){if (this.readyState == 4 && this.status == 200)ReadXMLSubject(this);};
+xhttp_sbj.open("GET", "3b.xml", true);
+xhttp_sbj.send();		
+}
+//*****************************
+function ReadXMLSubject(xml) {
+//*****************************	
+//cell4.innerHTML=strLesson+ " "+ bells[i].lesson;
+var xmlDoc = xml.responseXML;		
+if (debug)console.log(xmlDoc);
+var txt = "";
+path = "/Class/Day[@id="+curDateTime.getDay()+"]/Lesson";
+if (xmlDoc.evaluate) {
+	var nodes = xmlDoc.evaluate(path, xmlDoc, null, XPathResult.ANY_TYPE, null);
+	var result = nodes.iterateNext();
+	iRow = 0;
+	while (result) {
+		document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=result.childNodes[0].nodeValue;
+		document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=parseInt(result.childNodes[0].nodeValue);
+		document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=findSubject(parseInt(result.childNodes[0].nodeValue));
+		//txt += result.childNodes[0].nodeValue + "<br>";
+		iRow++;
+		result = nodes.iterateNext();
+	} 
+} else if (window.ActiveXObject || xhttp_sbj.responseType == "msxml-document") {
+	xml.setProperty("SelectionLanguage", "XPath");
+	nodes = xml.selectNodes(path);
+	for (i = 0; i < nodes.length; i++) {
+		txt += nodes[i].childNodes[0].nodeValue + "<br>";
+		}
+    }
+	
+	
+	for (i=iRow;i!=LessonCount;i++)
+		{
+		document.getElementById("r_Timetable_"+(i)).cells[3].innerHTML="";	
+		}	
+
+		//debug document.getElementById("demo").innerHTML = txt;
 }
 //*****************************	
 function Check_Calendar_Status(){
@@ -263,9 +324,9 @@ for (i=0;i!=row.cells.length;i++)
 //document.getElementById("r_Timetable_"+id-1).bgColor="#FFFFFF";
 //document.getElementById("r_Timetable_"+id).style="border-bottom: 2pt solid #FFAAAA;";
 //document.getElementById("r_Timetable_"+i).style.borderBottom="thick solid #FF0000";
-	//document.getElementById("r_Timetable_"+i).style.borderBottomStyle="solid";	
-	//document.getElementById("r_Timetable_"+i).style= "border: thick solid #FF0000;"
-	//cell1.style.borderBottomStyle="solid";
+//document.getElementById("r_Timetable_"+i).style.borderBottomStyle="solid";	
+//document.getElementById("r_Timetable_"+i).style= "border: thick solid #FF0000;"
+//cell1.style.borderBottomStyle="solid";
 	
 render_progress_set_status();	
 }
@@ -361,6 +422,18 @@ var new_style="bell_"
 if (Cookie.ring)new_style+="on";else new_style+="off";
 if (debug) console.log("btn_sound_set_image() "+new_style); 
 document.getElementById('btn_sound').className=new_style;
-
-}	
+}
+//*****************************
+function findSubject(id) {
+//*****************************	
+var findFromArray="";
+var l=subjects.length;
+for (i=0;i!=l;i++)
+	if (subjects[i].id==id) 
+	{
+	findFromArray=subjects[i].name;
+	break;	
+	}	
+return 	findFromArray;
+}
 		
