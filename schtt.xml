@@ -12,7 +12,7 @@
 		<Lesson lesson="09" STARTTIME="15:25" ENDTIME="16:05"></Lesson>		
 		<Lesson lesson="10" STARTTIME="16:20" ENDTIME="17:00"></Lesson>				
 	</bell>
-	<Subjects>
+	<!--<Subjects>
 		<subject ID=" 01">Математика</subject>
 		<subject ID="02 ">Русский язык</subject>
 		<subject ID="03">English</subject>
@@ -21,5 +21,9 @@
 		<subject ID="06 ">Окружающий мир</subject>
 		<subject ID=" 7 ">Информатика</subject>
 		<subject ID=" 17 ">Музыка</subject>
-	</Subjects>
+	</Subjects>-->
+	<Classes>
+		<class id="3b.xml">3Б</class>
+		<class id="8a.xml">8А</class>
+	</Classes>
 </Timetable>

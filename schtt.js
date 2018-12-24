@@ -1,3 +1,4 @@
+// [ ] Если куки Класс не определена, то найти и подставить первый класс из schtt.xml/classes;
 // [ ] Рачитать LEssonCount, пока констнта
 // [ ] Remake function findSubject(id) 
 // [ ] Сортировк в xml
@@ -8,9 +9,9 @@
 // -> Первый таймер точно до 59 секунд, второй через минуту. На ежесекундное моргание : .
 //-> линия времени в таблице для нерабчего времени. Если время до  полуночи, то ниже всейтаблицы, если после полунчи, то над всей таблицей
 //-> Учитывать день недели
-var debug=true;
+//var debug=true;
 if (typeof debug === 'undefined')  var debug=false;
-var version="1.04 19122018";
+var version="1.05 24122018";
 var xhttp_sbj = new XMLHttpRequest();
 var lastDateTime= new Date();
 var curDateTime= new Date(lastDateTime.getTime());
@@ -18,9 +19,9 @@ var bells =[];//Object Definition https://www.w3schools.com/js/js_objects.asp
 var subjects =[];
 var idLesson=-1;
 var idLessonNext=-1;
-var LessonCount=10;
+var LessonCount=10; //Максимальное количество уроков в школе
 var idLessonPrevios=-1;
-var LessonDuration=0;
+var LessonDuration=0; // Продолжительность занятия, перемены или нерабочего времени
 var Calendar_Status=-1; //-1 - undefined, 0-timeoff, 1-Lesson, 2-break
 var DateTime_NextStatus = new Date(lastDateTime.getFullYear(), lastDateTime.getMonth(), lastDateTime.getDate(), 23, 59);
 var DateTime_PreviosStatus = new Date(lastDateTime.getFullYear(), lastDateTime.getMonth(), lastDateTime.getDate(), 0, 0);
@@ -33,7 +34,8 @@ const color_status="#FFAAAA";
 const color_NOstatus="#FFFFFF";
 var TimeSpend =0;
 var TimeRest  =0;
-var Cookie = {ring:true, theme:"light"};
+var Cookie = {ring:true, theme:"light",class:"3b"};
+//var TimeTableClasses[];
 
 //*****************************
 function render() {
@@ -47,8 +49,7 @@ if (debug) document.getElementById('Calendar_Clock').innerHTML+=":"+(curDateTime
 if (curDateTime>=DateTime_NextStatus)
 	{
 	Check_Calendar_Status();
-	if (Cookie.ring)
-	{var a=document.getElementById("soundbell");a.play();}
+	if (Cookie.ring){var a=document.getElementById("soundbell");a.play();}
 	}
 
 TimeSpend=Math.floor((curDateTime-DateTime_PreviosStatus)/60000);
@@ -100,7 +101,6 @@ document.getElementById('Calendar_Date').innerHTML =new Intl.DateTimeFormat('def
 //*****************************
 window.onload = function() {
 //*****************************
-if (debug)console.log("DEBUG ON");
 checkCookie();
 timer = setInterval(render, 1000);
 var xhttp = new XMLHttpRequest();
@@ -181,7 +181,7 @@ if (xmlDoc.evaluate) {
 
 
 xhttp_sbj.onreadystatechange = function(){if (this.readyState == 4 && this.status == 200)ReadXMLSubject(this);};
-xhttp_sbj.open("GET", "3b.xml", true);
+xhttp_sbj.open("GET", Cookie.class+".xml", true);
 xhttp_sbj.send();		
 }
 //*****************************
@@ -190,7 +190,6 @@ function ReadXMLSubject(xml) {
 //cell4.innerHTML=strLesson+ " "+ bells[i].lesson;
 var xmlDoc = xml.responseXML;		
 if (debug)console.log(xmlDoc);
-var txt = "";
 path = "/Class/Day[@id="+curDateTime.getDay()+"]/Lesson";
 if (xmlDoc.evaluate) {
 	var nodes = xmlDoc.evaluate(path, xmlDoc, null, XPathResult.ANY_TYPE, null);
@@ -198,9 +197,8 @@ if (xmlDoc.evaluate) {
 	iRow = 0;
 	while (result) {
 		document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=result.childNodes[0].nodeValue;
-		document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=parseInt(result.childNodes[0].nodeValue);
-		document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=findSubject(parseInt(result.childNodes[0].nodeValue));
-		//txt += result.childNodes[0].nodeValue + "<br>";
+		//document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=parseInt(result.childNodes[0].nodeValue);
+		//document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=findSubject(parseInt(result.childNodes[0].nodeValue));		
 		iRow++;
 		result = nodes.iterateNext();
 	} 
@@ -208,7 +206,7 @@ if (xmlDoc.evaluate) {
 	xml.setProperty("SelectionLanguage", "XPath");
 	nodes = xml.selectNodes(path);
 	for (i = 0; i < nodes.length; i++) {
-		txt += nodes[i].childNodes[0].nodeValue + "<br>";
+		//txt += nodes[i].childNodes[0].nodeValue + "<br>";
 		}
     }
 	
@@ -233,7 +231,6 @@ else
 			if (bells[i].STARTTIME<=curDateTime && curDateTime < bells[i].ENDTIME)  {SetLesson(i);break;}
 			}
 }
-
 //*****************************	
 function PrintErrorTo_calendar_foot(text){
 //*****************************		
@@ -320,14 +317,7 @@ for (i=0;i!=row.cells.length;i++)
 	{
 	row.cells[i].style.borderTopStyle="solid";	
 	row.cells[i].style.borderTopColor=color_status;	
-	}	
-//document.getElementById("r_Timetable_"+id-1).bgColor="#FFFFFF";
-//document.getElementById("r_Timetable_"+id).style="border-bottom: 2pt solid #FFAAAA;";
-//document.getElementById("r_Timetable_"+i).style.borderBottom="thick solid #FF0000";
-//document.getElementById("r_Timetable_"+i).style.borderBottomStyle="solid";	
-//document.getElementById("r_Timetable_"+i).style= "border: thick solid #FF0000;"
-//cell1.style.borderBottomStyle="solid";
-	
+	}		
 render_progress_set_status();	
 }
 //*****************************	
@@ -367,11 +357,7 @@ for (i=0;i!=bells.length;i++)
 	var cell3 = row.insertCell(2);
 	cell3.innerHTML=GetTimeHM(bells[i].ENDTIME);
 	var cell4 = row.insertCell(3);
-	cell4.innerHTML=strLesson+ " "+ bells[i].lesson;
-	//document.getElementById("r_Timetable_"+i).style.borderBottom="thick solid #FF0000";
-	//document.getElementById("r_Timetable_"+i).style.borderBottomStyle="solid";	
-	//document.getElementById("r_Timetable_"+i).style= "border: thick solid #FF0000;"
-	//cell1.style.borderBottomStyle="solid";
+	cell4.innerHTML=strLesson+ " "+ bells[i].lesson;	
 	}
 }
 //*****************************
@@ -401,6 +387,7 @@ function getCookie(cname) {
 //*****************************
 function checkCookie() {
 //*****************************
+//Ring
 var ring = getCookie("ring");  
 if (debug) console.log("checkCookie() ring="+ring); 
 if (ring == "") 
@@ -409,7 +396,19 @@ else
 	Cookie.ring=(/true/i).test(ring) ;
 if (debug) console.log("checkCookie() Cookie.ring="+Cookie.ring);
 btn_sound_set_image();
+//Class
+var TimeTableClass = getCookie("class");  
+if (TimeTableClass == "") 
+	setCookie("class", Cookie.class, 365);
+else
+	Cookie.class=TimeTableClass;
+btn_class_set(Cookie.class);
 }
+//*****************************
+function btn_class_set(idClass){
+//*****************************
+document.getElementById('btn_class').innerHTML=idClass;}	
+//*****************************
 function btn_sound_onclick(){
 if (debug) console.log("btn_sound.onclick"); 
 Cookie.ring=!Cookie.ring;
@@ -424,16 +423,16 @@ if (debug) console.log("btn_sound_set_image() "+new_style);
 document.getElementById('btn_sound').className=new_style;
 }
 //*****************************
-function findSubject(id) {
+//function findSubject(id) {
 //*****************************	
-var findFromArray="";
-var l=subjects.length;
-for (i=0;i!=l;i++)
-	if (subjects[i].id==id) 
-	{
-	findFromArray=subjects[i].name;
-	break;	
-	}	
-return 	findFromArray;
-}
+//var findFromArray="";
+//var l=subjects.length;
+//for (i=0;i!=l;i++)
+//	if (subjects[i].id==id) 
+//	{
+//	findFromArray=subjects[i].name;
+//	break;	
+//	}	
+//return 	findFromArray;
+//}
 		
