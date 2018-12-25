@@ -19,14 +19,25 @@
 		style="vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;display: inline-block;background: url(help2.png); "></button>
 	<button class="bell_on" id="btn_sound"  onclick="btn_sound_onclick()"
 		style="vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;"></button>	
-	<div class="dropdown"><!-- https://www.w3schools.com/css/css_dropdowns.asp-->
-	<button   class="dropbtn"               id="btn_class"                                
-		style="vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;"><b>Класс</b></button>
-	 <div class="dropdown-content">
-	<a href="#">Link 1</a>
-	<a href="#">Link 2</a>
-	<a href="#">Link 3</a>
-	</div></div>		
+	<!-- <div class="dropdown"><!-- https://www.w3schools.com/css/css_dropdowns.asp-->
+	<!-- class="dropbtn"    -->
+	<button  id="btn_class" onclick="myFunction()"                                
+		style="vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;"><b></b></button>
+<script>
+function myFunction() {
+document.getElementById("classes").style.display = "inline";
+document.getElementById("c2").focus();
+}
+</script>		
+	 <div class="dropdown-content" id="classes">
+	<a href="#" onclick="myFunction2()">3Б</a>
+	<a id="c2" href="#">8А</a>
+	<a href="#">8Б</a>
+<script>		function myFunction2() {
+document.getElementById("classes").style.display = "none";
+}	</script>		
+
+	</div><!-- </div>	-->	
 	</td></tr>	
 	<tr align="center">
 		<td id="Calendar_Date" colspan="4">&nbsp;</td>
