@@ -23,7 +23,7 @@
 		<subject ID=" 17 ">Музыка</subject>
 	</Subjects>-->
 	<Classes>
-		<class id="3b.xml">3Б</class>
-		<class id="8a.xml">8А</class>
+		<class id="3b">3Б</class>
+		<class id="8a">8А</class>
 	</Classes>
 </Timetable>

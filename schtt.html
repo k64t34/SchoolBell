@@ -21,23 +21,10 @@
 		style="vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;"></button>	
 	<!-- <div class="dropdown"><!-- https://www.w3schools.com/css/css_dropdowns.asp-->
 	<!-- class="dropbtn"    -->
-	<button  id="btn_class" onclick="myFunction()"                                
-		style="vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;"><b></b></button>
-<script>
-function myFunction() {
-document.getElementById("classes").style.display = "inline";
-document.getElementById("c2").focus();
-}
-</script>		
-	 <div class="dropdown-content" id="classes">
-	<a href="#" onclick="myFunction2()">3Б</a>
-	<a id="c2" href="#">8А</a>
-	<a href="#">8Б</a>
-<script>		function myFunction2() {
-document.getElementById("classes").style.display = "none";
-}	</script>		
-
-	</div><!-- </div>	-->	
+	<button  id="btn_class" onclick="btn_class_show()"                                
+		style="float: right; vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;"><b></b></button>
+		
+	 <div class="dropdown-content" id="classes" onclick="btn_class_select()"></div>
 	</td></tr>	
 	<tr align="center">
 		<td id="Calendar_Date" colspan="4">&nbsp;</td>
@@ -72,5 +59,6 @@ document.getElementById("classes").style.display = "none";
 	<tr bgcolor="silver"><td  align="center"colspan="4">Расписание звонков</td></tr>
 </table>
 <audio id="soundbell"><source src="bell.mp3" type="audio/mpeg"></audio>
-<!--<span id="demo">demo</span>-->
+<span id="demo"></span>
 </body></html>
+

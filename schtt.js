@@ -1,3 +1,4 @@
+// [ ] Поставить таймер на появление списка классов
 // [ ] Если куки Класс не определена, то найти и подставить первый класс из schtt.xml/classes;
 // [ ] Рачитать LEssonCount, пока констнта
 // [ ] Remake function findSubject(id) 
@@ -16,7 +17,7 @@ var xhttp_sbj = new XMLHttpRequest();
 var lastDateTime= new Date();
 var curDateTime= new Date(lastDateTime.getTime());
 var bells =[];//Object Definition https://www.w3schools.com/js/js_objects.asp
-var subjects =[];
+//var subjects =[];
 var idLesson=-1;
 var idLessonNext=-1;
 var LessonCount=10; //Максимальное количество уроков в школе
@@ -36,7 +37,6 @@ var TimeSpend =0;
 var TimeRest  =0;
 var Cookie = {ring:true, theme:"light",class:"3b"};
 //var TimeTableClasses[];
-
 //*****************************
 function render() {
 //*****************************
@@ -162,8 +162,26 @@ if (debug)
 		}		
 	}
 	render_timetable();
-	Check_Calendar_Status();	
+	Check_Calendar_Status();
+//Read classes
+if (xmlDoc.evaluate) {
+	var nodes = xmlDoc.evaluate("/Timetable/Classes/class", xmlDoc, null, XPathResult.ANY_TYPE, null);
+	var result = nodes.iterateNext();	
+	var div_classes=document.getElementById("classes");		
+	while (result) {
+		a_class = document.createElement("A"); 
+		a_class.href="#";
+		a_class.id="class_"+result.attributes["0"].nodeValue;
+		div_classes.appendChild(a_class);
+		a_class.innerHTML=result.childNodes[0].nodeValue;		
+		if (Cookie.class==result.attributes["0"].nodeValue) document.getElementById("btn_class").innerHTML=result.childNodes[0].nodeValue;
+		result = nodes.iterateNext();
+		} 	
+	}	
+
+
 //Read subjects title	
+/*
 path = "/Timetable/Subjects/subject";
 var txt = "";
 if (xmlDoc.evaluate) {
@@ -177,46 +195,53 @@ if (xmlDoc.evaluate) {
 		result = nodes.iterateNext();
 		} 
 	//document.getElementById("demo").innerHTML = findSubject(222);
-	}	
-
-
-xhttp_sbj.onreadystatechange = function(){if (this.readyState == 4 && this.status == 200)ReadXMLSubject(this);};
+	}*/
+ReadXMLSubject();
+}
+//*****************************
+function ReadXMLSubject() {
+xhttp_sbj.onreadystatechange = function(){if (this.readyState == 4 && this.status == 200)RenderSubject(this);};
 xhttp_sbj.open("GET", Cookie.class+".xml", true);
 xhttp_sbj.send();		
 }
 //*****************************
-function ReadXMLSubject(xml) {
+function RenderSubject(xml) {
 //*****************************	
-//cell4.innerHTML=strLesson+ " "+ bells[i].lesson;
-var xmlDoc = xml.responseXML;		
-if (debug)console.log(xmlDoc);
-path = "/Class/Day[@id="+curDateTime.getDay()+"]/Lesson";
-if (xmlDoc.evaluate) {
-	var nodes = xmlDoc.evaluate(path, xmlDoc, null, XPathResult.ANY_TYPE, null);
-	var result = nodes.iterateNext();
-	iRow = 0;
-	while (result) {
-		document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=result.childNodes[0].nodeValue;
-		//document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=parseInt(result.childNodes[0].nodeValue);
-		//document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=findSubject(parseInt(result.childNodes[0].nodeValue));		
-		iRow++;
-		result = nodes.iterateNext();
-	} 
-} else if (window.ActiveXObject || xhttp_sbj.responseType == "msxml-document") {
-	xml.setProperty("SelectionLanguage", "XPath");
-	nodes = xml.selectNodes(path);
-	for (i = 0; i < nodes.length; i++) {
-		//txt += nodes[i].childNodes[0].nodeValue + "<br>";
-		}
-    }
-	
-	
-	for (i=iRow;i!=LessonCount;i++)
-		{
-		document.getElementById("r_Timetable_"+(i)).cells[3].innerHTML="";	
+if ( xml.responseXML != null ) 
+	{	
+	var xmlDoc = xml.responseXML;		
+	if (debug)console.log(xmlDoc);
+	path = "/Class/Day[@id="+curDateTime.getDay()+"]/Lesson";
+	if (xmlDoc.evaluate) {
+		var nodes = xmlDoc.evaluate(path, xmlDoc, null, XPathResult.ANY_TYPE, null);
+		var result = nodes.iterateNext();
+		iRow = 0;
+		while (result) {
+			document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=result.childNodes[0].nodeValue;
+			//document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=parseInt(result.childNodes[0].nodeValue);
+			//document.getElementById("r_Timetable_"+(iRow)).cells[3].innerHTML=findSubject(parseInt(result.childNodes[0].nodeValue));		
+			iRow++;
+			result = nodes.iterateNext();
+		} 
+	} else if (window.ActiveXObject || xhttp_sbj.responseType == "msxml-document") {
+		xml.setProperty("SelectionLanguage", "XPath");
+		nodes = xml.selectNodes(path);
+		for (i = 0; i < nodes.length; i++) {
+			//txt += nodes[i].childNodes[0].nodeValue + "<br>";
+			}
 		}	
-
-		//debug document.getElementById("demo").innerHTML = txt;
+		for (i=iRow;i!=LessonCount;i++)
+			{
+			document.getElementById("r_Timetable_"+(i)).cells[3].innerHTML="";	
+			}
+	}		
+else	
+	{
+	for (i=0;i!=LessonCount;i++)
+		{
+		document.getElementById("r_Timetable_"+(i)).cells[3].innerHTML=	strLesson+ " "+ (i+1);
+		}	
+	}	
 }
 //*****************************	
 function Check_Calendar_Status(){
@@ -435,4 +460,25 @@ document.getElementById('btn_sound').className=new_style;
 //	}	
 //return 	findFromArray;
 //}
-		
+//*****************************			
+function btn_class_show(){
+if (document.getElementById("classes").style.display== "inline")
+	document.getElementById("classes").style.display = "none";	
+else	
+	document.getElementById("classes").style.display = "inline";	
+}
+function btn_class_select(){
+//*****************************	
+document.getElementById("classes").style.display = "none";
+a_class=event.srcElement;
+classIDstring = a_class.id.split("_");
+if (classIDstring[1] != Cookie.class)
+	{
+	Cookie.class=classIDstring[1];
+	setCookie("class", Cookie.class, 365);	
+	btn_class_set(Cookie.class);
+	document.getElementById("btn_class").innerHTML=a_class.innerHTML;
+	ReadXMLSubject();
+	}	
+}	
+
