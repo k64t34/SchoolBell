@@ -30,6 +30,12 @@ body {
 .bell_off {
 	background: url(bell-off.png) center;
 	}	
+.weekTimetable {
+	background: url(weekTimetable.png) center;
+	}		
+.RingTimetable {
+	background: url(RingTimetable.png) center;
+	}			
 .progress {
   background-color: #f3f3f3;  
   height: 18px;

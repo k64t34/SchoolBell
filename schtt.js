@@ -109,6 +109,9 @@ xhttp.open("GET", "schtt.xml", true);
 xhttp.send();
 render_date();
 render();
+//document.getElementById('RingTimetable').style.backgroundColor="#000000";	
+document.getElementById('RingTimetable').diabled =true;	
+document.getElementById('RingTimetable').style.outlineStyle="dotted";	
 }  
 //*****************************
 function ReadXML(xhttp) {

@@ -3,30 +3,44 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="icon" type="image/ico" href="favicon.ico" />
 <link rel="stylesheet" type="text/css" href="light.css">
-<link rel="manifest" href="manifest.json"><!--https://developers.google.com/web/fundamentals/web-app-manifest/?utm_source=devtools -->
 <script src="schtt.js"></script>
 <title>Расписание уроков</title></head>
 <body>
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /* Loop through a collection of all HTML elements: */
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /* Make an HTTP request using the attribute value as the file name: */
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /* Remove the attribute, and call this function once more: */
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /* Exit the function: */
+      return;
+    }
+  }
+}
+</script>
+<div w3-include-html="toolbar.html"></div>
+<script>
+includeHTML();
+</script>
 <table id="tbl_Calendar" align="center" class="tbl_Calendar" width="300px">
-	<tr bgcolor="silver" border="hidden">
-	<td colspan="4">
-	<!---<img src="bell.png">&nbsp;--->
-	<!--<a href="https://docs.google.com/forms/d/e/1FAIpQLSfVCzklDXKZ4wKdp7vUwD0dAUv1lXfw0qbMqHhWB5IEWJDydg/viewform">
-	<img src="help.png" width=32 border=1 style="cursor: pointer;"></a>
-	<button><img src="help.png" width=32 style="cursor: pointer;"></button>
-	<button onClick="javascript:close_clip()"><img src="help.png" width=32 style="cursor: pointer;"></button>-->
-	<!--http://jsfiddle.net/ThinkingStiff/V5Xqr/-->
-	<button onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSfVCzklDXKZ4wKdp7vUwD0dAUv1lXfw0qbMqHhWB5IEWJDydg/viewform'" 
-		style="vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;display: inline-block;background: url(help2.png); "></button>
-	<button class="bell_on" id="btn_sound"  onclick="btn_sound_onclick()"
-		style="vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;"></button>	
-	<!-- <div class="dropdown"><!-- https://www.w3schools.com/css/css_dropdowns.asp-->
-	<!-- class="dropbtn"    -->
-	<button  id="btn_class" onclick="btn_class_show()"                                
-		style="float: right; vertical-align: bottom; cursor: pointer; width: 32px; height: 32px; border-radius: 4px;background-size: 32px 32px; background-position: center;"><b></b></button>
-		
-	 <div class="dropdown-content" id="classes" onclick="btn_class_select()"></div>
-	</td></tr>	
+	
 	<tr align="center">
 		<td id="Calendar_Date" colspan="4">&nbsp;</td>
 	</tr>
