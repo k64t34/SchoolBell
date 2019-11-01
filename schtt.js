@@ -11,8 +11,8 @@
 //-> линия времени в таблице для нерабчего времени. Если время до  полуночи, то ниже всейтаблицы, если после полунчи, то над всей таблицей
 //-> Учитывать день недели
 //var debug=true;
-if (typeof debug === 'undefined')  var debug=false;
-var version="1.05 24122018";
+
+
 var xhttp_sbj = new XMLHttpRequest();
 var lastDateTime= new Date();
 var curDateTime= new Date(lastDateTime.getTime());
@@ -26,7 +26,7 @@ var LessonDuration=0; // Продолжительность занятия, пе
 var Calendar_Status=-1; //-1 - undefined, 0-timeoff, 1-Lesson, 2-break
 var DateTime_NextStatus = new Date(lastDateTime.getFullYear(), lastDateTime.getMonth(), lastDateTime.getDate(), 23, 59);
 var DateTime_PreviosStatus = new Date(lastDateTime.getFullYear(), lastDateTime.getMonth(), lastDateTime.getDate(), 0, 0);
-var WindowOrientation=1   ;//0-Landscape, 1-Portrait https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
 var ClockColon=true;
 const strLesson="Урок";
 const strBreak="Перемена";
@@ -35,7 +35,7 @@ const color_status="#FFAAAA";
 const color_NOstatus="#FFFFFF";
 var TimeSpend =0;
 var TimeRest  =0;
-var Cookie = {ring:true, theme:"light",class:"3b"};
+//var Cookie = {ring:true, theme:"light",class:"4b"};
 //var TimeTableClasses[];
 //*****************************
 function render() {
@@ -101,17 +101,15 @@ document.getElementById('Calendar_Date').innerHTML =new Intl.DateTimeFormat('def
 //*****************************
 window.onload = function() {
 //*****************************
-checkCookie();
+//checkCookie();
+toolbar_onload();
 timer = setInterval(render, 1000);
-var xhttp = new XMLHttpRequest();
+/*var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function(){if (this.readyState == 4 && this.status == 200)ReadXML(this);};
 xhttp.open("GET", "schtt.xml", true);
-xhttp.send();
+xhttp.send();*/
 render_date();
 render();
-//document.getElementById('RingTimetable').style.backgroundColor="#000000";	
-document.getElementById('RingTimetable').diabled =true;	
-document.getElementById('RingTimetable').style.outlineStyle="dotted";	
 }  
 //*****************************
 function ReadXML(xhttp) {
@@ -388,68 +386,10 @@ for (i=0;i!=bells.length;i++)
 	cell4.innerHTML=strLesson+ " "+ bells[i].lesson;	
 	}
 }
-//*****************************
-function setCookie(cname, cvalue, exdays) {
-//*****************************	
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-  var expires = "expires="+d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-//*****************************
-function getCookie(cname) {
-//*****************************	
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-//*****************************
-function checkCookie() {
-//*****************************
-//Ring
-var ring = getCookie("ring");  
-if (debug) console.log("checkCookie() ring="+ring); 
-if (ring == "") 
-	setCookie("ring", Cookie.ring, 365);
-else
-	Cookie.ring=(/true/i).test(ring) ;
-if (debug) console.log("checkCookie() Cookie.ring="+Cookie.ring);
-btn_sound_set_image();
-//Class
-var TimeTableClass = getCookie("class");  
-if (TimeTableClass == "") 
-	setCookie("class", Cookie.class, 365);
-else
-	Cookie.class=TimeTableClass;
-btn_class_set(Cookie.class);
-}
-//*****************************
-function btn_class_set(idClass){
-//*****************************
-document.getElementById('btn_class').innerHTML=idClass;}	
-//*****************************
-function btn_sound_onclick(){
-if (debug) console.log("btn_sound.onclick"); 
-Cookie.ring=!Cookie.ring;
-setCookie("ring", Cookie.ring, 365);
-btn_sound_set_image();
-}	
-function btn_sound_set_image(){
-if (debug) console.log("btn_sound_set_image() Cookie.ring="+Cookie.ring);	
-var new_style="bell_"
-if (Cookie.ring)new_style+="on";else new_style+="off";
-if (debug) console.log("btn_sound_set_image() "+new_style); 
-document.getElementById('btn_sound').className=new_style;
-}
+
+
+
+// If all ok, then you can delete fllowed comnented funcion
 //*****************************
 //function findSubject(id) {
 //*****************************	
@@ -463,14 +403,14 @@ document.getElementById('btn_sound').className=new_style;
 //	}	
 //return 	findFromArray;
 //}
-//*****************************			
+/*//*****************************			
 function btn_class_show(){
 if (document.getElementById("classes").style.display== "inline")
 	document.getElementById("classes").style.display = "none";	
 else	
 	document.getElementById("classes").style.display = "inline";	
-}
-function btn_class_select(){
+}*/
+/*function btn_class_select(){
 //*****************************	
 document.getElementById("classes").style.display = "none";
 a_class=event.srcElement;
@@ -483,5 +423,5 @@ if (classIDstring[1] != Cookie.class)
 	document.getElementById("btn_class").innerHTML=a_class.innerHTML;
 	ReadXMLSubject();
 	}	
-}	
+}	*/
 
